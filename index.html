@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sunidhi 💜</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif;}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    background: radial-gradient(circle at top, #1a0033, #000);
+    color:white;
+    position:relative;
+}
+
+/* Background glow */
+body::before{
+    content:"";
+    position:absolute;
+    width:300%;
+    height:300%;
+    background: radial-gradient(circle, rgba(255,0,150,0.1), transparent);
+    animation: rotateBG 20s linear infinite;
+}
+@keyframes rotateBG{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+/* Cursor glow */
+.cursor-glow{
+    position:fixed;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:rgba(255, 105, 180, 0.6);
+    pointer-events:none;
+    filter:blur(10px);
+    transform:translate(-50%,-50%);
+    z-index:9999;
+}
+
+/* Stars */
+.stars span{
+    position:absolute;
+    background:white;
+    animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle{
+    from{opacity:0.3;} to{opacity:1;}
+}
+
+/* Pages */
+.page{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    opacity:0;
+    transform:scale(0.9) blur(10px);
+    transition:0.8s ease;
+}
+.active{
+    opacity:1;
+    transform:scale(1) blur(0);
+}
+
+/* Button */
+.btn{
+    margin-top:20px;
+    padding:12px 28px;
+    border-radius:30px;
+    border:none;
+    background:linear-gradient(45deg,#ff6ec7,#8b5cf6);
+    color:white;
+    cursor:pointer;
+    transition:0.3s;
+}
+.btn:hover{transform:scale(1.1);}
+
+/* Emoji */
+.emoji{
+    font-size:90px;
+    animation:float 3s infinite;
+}
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-20px);}
+}
+
+/* Chat */
+.chat{
+    background:#111;
+    padding:20px;
+    border-radius:20px;
+    width:300px;
+}
+.msg{
+    background:#8b5cf6;
+    padding:10px;
+    border-radius:10px;
+    margin:10px 0;
+    opacity:0;
+    transform:translateY(20px);
+    animation:fadeUp 0.5s forwards;
+}
+@keyframes fadeUp{
+    to{opacity:1;transform:translateY(0);}
+}
+
+/* Typing */
+.typing{
+    border-right:2px solid white;
+    white-space:nowrap;
+    overflow:hidden;
+}
+
+/* Hearts */
+.heart{
+    position:absolute;
+    color:pink;
+    animation:explode 1s forwards;
+}
+@keyframes explode{
+    to{
+        transform:translateY(-150px) scale(2);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="music" src="Enna Sona Ok Jaanu 320 Kbps(1).mp3" loop></audio>
+
+<div class="cursor-glow" id="cursorGlow"></div>
+<div class="stars"></div>
+
+<!-- Page 1 -->
+<div class="page active" id="p1">
+    <div class="emoji">👦💐👧</div>
+    <h1>For You 💜</h1>
+    <button class="btn" onclick="nextPage(2)">Open ❤️</button>
+    <button class="btn" onclick="toggleMusic()">🎵 Play / Pause</button>
+</div>
+
+<!-- Page 2 -->
+<div class="page" id="p2">
+    <div id="letter" class="typing"></div>
+    <button class="btn" onclick="nextPage(3)">Next 💜</button>
+</div>
+
+<!-- Page 3 -->
+<div class="page" id="p3">
+    <div class="chat">
+        <div class="msg" style="animation-delay:0.5s;">Hey you ❤️</div>
+        <div class="msg" style="animation-delay:1.5s;">Smile please 🥺</div>
+        <div class="msg" style="animation-delay:2.5s;">You look cute when you do 💜</div>
+    </div>
+    <button class="btn" onclick="nextPage(4)">Last ✨</button>
+</div>
+
+<!-- Page 4 -->
+<div class="page" id="p4">
+    <div class="emoji">👦💐🍦</div>
+    <h1>Thank you for smiling 💜</h1>
+</div>
+
+<script>
+
+/* Cursor glow */
+document.addEventListener("mousemove",(e)=>{
+    const glow=document.getElementById("cursorGlow");
+    glow.style.left=e.clientX+"px";
+    glow.style.top=e.clientY+"px";
+});
+
+/* Page switch */
+function nextPage(n){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('p'+n).classList.add('active');
+}
+
+/* Music control */
+function toggleMusic(){
+    let music=document.getElementById("music");
+    if(music.paused){
+        music.play();
+    }else{
+        music.pause();
+    }
+}
+
+/* Typing effect */
+const text = `Hey Sunidhi, my pretty girl 🤍
+
+Ik sometimes life gets hard, but you’re stronger than you think.
+Please smile for me… you look absolutely gorgeous when you do 💜
+
+I’m always here with you.
+Now give me that pretty smile ✨🤍`;
+
+let i=0;
+function type(){
+    if(i<text.length){
+        document.getElementById("letter").innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type,40);
+    }
+}
+type();
+
+/* Stars */
+const stars = document.querySelector('.stars');
+for(let i=0;i<120;i++){
+    let s=document.createElement('span');
+    let size=Math.random()*3;
+
+    s.style.width=size+'px';
+    s.style.height=size+'px';
+    s.style.left=Math.random()*100+'vw';
+    s.style.top=Math.random()*100+'vh';
+    s.style.animationDuration=(1+Math.random()*3)+'s';
+
+    stars.appendChild(s);
+}
+
+/* Parallax */
+document.addEventListener("mousemove",(e)=>{
+    document.querySelectorAll(".stars span").forEach(star=>{
+        let speed = star.offsetWidth;
+        star.style.transform = `translate(${e.clientX*speed/1000}px, ${e.clientY*speed/1000}px)`;
+    });
+});
+
+/* Heart explosion only on background */
+document.body.addEventListener("click",(e)=>{
+    if(e.target.tagName === "BUTTON") return;
+
+    for(let i=0;i<15;i++){
+        let h=document.createElement('div');
+        h.className='heart';
+        h.innerHTML='💖';
+
+        let x = (Math.random()-0.5)*200;
+        let y = (Math.random()-0.5)*200;
+
+        h.style.left=e.clientX+'px';
+        h.style.top=e.clientY+'px';
+        h.style.transform=`translate(${x}px,${y}px)`;
+
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),1000);
+    }
+
+    document.getElementById('music').play();
+});
+
+</script>
+
+</body>
+</html>
